@@ -1,9 +1,9 @@
-import SignupSignin from '../components/SignupSignin/SignupSignin';
+import Auth from '../components/Auth';
 const Login = () => {
   
 
   return (
-    <SignupSignin mode='signin-mode' />
+    <Auth mode='signin-mode' />
   )
 }
 

@@ -2,9 +2,9 @@ import React from 'react';
 import GlobalStyle from './global-styles';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
-import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Navbar from './components/Navbar/Navbar';
+import Register from './pages/Register';
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
       <Navbar/>
       <Routes>
         <Route path='/' exact element={<Home/>} />
-        <Route path='/signup' exact element={<Signup/>} />
+        <Route path='/register' exact element={<Register/>} />
         <Route path='/login' exact element={<Login/>} />
       </Routes>
     </BrowserRouter>

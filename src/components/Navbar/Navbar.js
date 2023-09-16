@@ -69,7 +69,7 @@ const Navbar = () => {
                 </NavLinks>
               </NavItem>
               <NavItem>
-                <NavLinks btn='true' onClick={() => closeMobileMenu('/signup', null)}>
+                <NavLinks btn='true' onClick={() => closeMobileMenu('/register', null)}>
                   Sign Up Free
                 </NavLinks>
               </NavItem>
