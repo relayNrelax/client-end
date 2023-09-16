@@ -4,6 +4,7 @@ const Signup = () => {
     const [credentials, setCredentials] = useState({
         name: '',
         phoneNo: '',
+        altNo: '',
         email: '',
         password: '',
         confirmPassword: ''
@@ -18,7 +19,22 @@ const Signup = () => {
 
     const handleSubmit = (event) => { 
         event.preventDefault();
+
+        if(credentials.altNo === credentials.phoneNo){
+            alert('Alternate number cannot be same as phone number');
+            return;
+        }
+
+        if(credentials.password !== credentials.confirmPassword){
+            console.log("triggered")
+            alert('Passwords and confirm password must be same');
+            return;
+        }
+       
+
         console.log(credentials);
+
+
     }
   return (
       <form className='signup-form' onSubmit={handleSubmit}>
@@ -30,6 +46,10 @@ const Signup = () => {
           <div className='input-field'>
               <i className='fas fa-phone'></i>
               <input type='text' placeholder='phone number' name='phoneNo' onChange={handleChange} value={credentials.phoneNo} />
+          </div>
+          <div className='input-field'>
+              <i className='fas fa-phone'></i>
+              <input type='text' placeholder='Alternate number' name='altNo' onChange={handleChange} value={credentials.altNo} />
           </div>
           <div className='input-field'>
               <i className='fas fa-envelope'></i>
