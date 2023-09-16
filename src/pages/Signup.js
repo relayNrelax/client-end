@@ -1,10 +1,9 @@
 import React from 'react'
+import SignupSignin from '../components/SignupSignin/SignupSignin'
 
 const Signup = () => {
   return (
-    <div>
-      Signup
-    </div>
+    <SignupSignin mode='signup-mode' />
   )
 }
 

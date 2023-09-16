@@ -1,10 +1,9 @@
-import React from 'react'
-
+import SignupSignin from '../components/SignupSignin/SignupSignin';
 const Login = () => {
+  
+
   return (
-    <div>
-      Login
-    </div>
+    <SignupSignin mode='signin-mode' />
   )
 }
 
