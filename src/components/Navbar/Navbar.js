@@ -31,9 +31,10 @@ const Navbar = () => {
 
   const scrollTo = (id) => {
     const element = document.getElementById(id);
-    element.scrollIntoView({
-      behavior: "smooth",
-    });
+    if(element) 
+      element.scrollIntoView({
+        behavior: "smooth",
+      });
   };
   const closeMobileMenu = (to, id) => {
     if (id && location.pathname === "/") scrollTo(id);
