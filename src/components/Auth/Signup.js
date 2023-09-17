@@ -1,14 +1,27 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { setToken } from '../../services/localStorage';
+import { useRegisterUserMutation } from '../../services/userAuthApi';
 
 const Signup = () => {
     const [credentials, setCredentials] = useState({
         name: '',
-        phoneNo: '',
-        altNo: '',
+        phoneNumber: '',
+        alternateNumber: '',
         email: '',
+        zip: '',
         password: '',
         confirmPassword: ''
     });
+
+    const [error, serError] = useState({
+        status: false,
+        message: '',
+        type: ''
+    })
+
+    const navigate = useNavigate();
+    const [registerUser] = useRegisterUserMutation();
 
     const handleChange = (event) => { 
         setCredentials({
@@ -17,27 +30,33 @@ const Signup = () => {
         });
     }
 
-    const handleSubmit = (event) => { 
+    const handleSubmit = async (event) => { 
         event.preventDefault();
 
-        if(credentials.altNo === credentials.phoneNo){
+        if(credentials.phoneNumber === credentials.alternateNumber){
             alert('Alternate number cannot be same as phone number');
             return;
         }
 
-        if(credentials.password !== credentials.confirmPassword){
-            console.log("triggered")
-            alert('Passwords and confirm password must be same');
-            return;
+        const response = await  registerUser(credentials);
+        if(response.data.status === true){
+            navigate('/dashboard');
+            setToken(response.data.token);
+            console.log(response.token)
+        }else{
+            serError({
+                status: true,
+                message: response.data.message,
+                type: response.data.type
+            })
         }
-       
-
-        console.log(credentials);
-
-
+        
     }
   return (
-      <form className='signup-form' onSubmit={handleSubmit}>
+    <>
+    {error.status && <div className='alert alert-danger'>{error.message}</div>}
+
+        <form className='signup-form' onSubmit={handleSubmit}>
           <h2 className='title'>Sign Up</h2>
           <div className='input-field'>
               <i className='fas fa-user'></i>
@@ -45,15 +64,19 @@ const Signup = () => {
           </div>
           <div className='input-field'>
               <i className='fas fa-phone'></i>
-              <input type='text' placeholder='phone number' name='phoneNo' onChange={handleChange} value={credentials.phoneNo} />
+              <input type='text' placeholder='phone number' name='phoneNumber' onChange={handleChange} value={credentials.phoneNumber} />
           </div>
           <div className='input-field'>
               <i className='fas fa-phone'></i>
-              <input type='text' placeholder='Alternate number' name='altNo' onChange={handleChange} value={credentials.altNo} />
+              <input type='text' placeholder='Alternate number' name='alternateNumber' onChange={handleChange} value={credentials.alternateNumber} />
           </div>
           <div className='input-field'>
               <i className='fas fa-envelope'></i>
               <input type='text' placeholder='email' name='email' onChange={handleChange} value={credentials.email} />
+          </div>
+          <div className='input-field'>
+              <i className='fas fa-envelope'></i>
+              <input type='number' placeholder='zip code' name='zip' onChange={handleChange} value={credentials.zip} />
           </div>
           <div className='input-field'>
               <i className='fas fa-lock'></i>
@@ -64,7 +87,9 @@ const Signup = () => {
               <input type='text' placeholder='repeat password' name='confirmPassword' onChange={handleChange} value={credentials.confirmPassword} />
           </div>
           <input type='submit' value='Signup' className='btn solid' />
-      </form>
+        </form>
+    </>
+      
   )
 }
 
